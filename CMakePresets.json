@@ -1,0 +1,61 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "Debug MSVC",
+            "displayName": "Debug MSVC",
+            "description": "Sets Ninja generator, build and runtime directory",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/__build_dir__/VSCode/MSVC/Debug",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/__build_out__",
+                "EDITOR_BUILD": "ON"
+            }
+        },
+        {
+            "name": "Release MSVC",
+            "displayName": "Release MSVC",
+            "description": "Sets Ninja generator, build and runtime directory",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/__build_dir__/VSCode/MSVC/Release",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl",
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/__build_out__",
+                "EDITOR_BUILD": "ON"
+            }
+        },
+        {
+            "name": "Debug GCC",
+            "displayName": "Debug GCC",
+            "description": "Sets Ninja generator, build and runtime directory",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/__build_dir__/VSCode/GCC/Debug",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/__build_out__",
+                "EDITOR_BUILD": "ON"
+            }
+        },
+        {
+            "name": "Release GCC",
+            "displayName": "Release GCC",
+            "description": "Sets Ninja generator, build and runtime directory",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/__build_dir__/VSCode/GCC/Release",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/__build_out__",
+                "EDITOR_BUILD": "ON"
+            }
+        }
+    ]
+}

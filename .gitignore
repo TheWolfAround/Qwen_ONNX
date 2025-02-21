@@ -1,0 +1,15 @@
+# Binaries
+*.dll
+*.lib
+*.so
+*.a
+*.exe
+*.pdb
+*.ilk
+
+# Build Folders
+__build_dir__
+__build_out__
+
+# Third Parties Folder
+__third_parties__

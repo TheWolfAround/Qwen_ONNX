@@ -21,7 +21,7 @@ namespace TWA
           m_session{nullptr},
           m_instance_name{"Qwen_2.5_0.5b_Instruct LLM Inference Driver"},
           m_memory_info{nullptr},
-          m_input_node_names{"input_ids", "attention_mask", "onnx::Neg_2"},
+          m_input_node_names{"input_ids", "attention_mask"},
           m_output_node_names{"logits"}
     {
         this->m_environment
@@ -49,7 +49,7 @@ namespace TWA
 
     void onnxruntime::run(std::vector<int64_t> &input_ids,
                            std::vector<int64_t> &attention_mask,
-                           std::vector<float16_t> &response)
+                           std::vector<float> &response)
     {
         this->m_input_tensors.clear();
         this->m_output_tensors.clear();
@@ -74,26 +74,15 @@ namespace TWA
                                                 input_dims.size());
 
         this->m_input_tensors.push_back(std::move(atn_mask));
-        
-        std::vector<int64_t> neg{0};
-        std::vector<int64_t> neg_dims{1};
-        Ort::Value neg_2
-            = Ort::Value::CreateTensor<int64_t>(this->m_memory_info,
-                                                neg.data(),
-                                                neg.size(),
-                                                nullptr,
-                                                0);
-
-        this->m_input_tensors.push_back(std::move(neg_2));
 
         std::vector<int64_t> response_dims{1, sequence_length, 151936};
 
         Ort::Value rsp
-            = Ort::Value::CreateTensor<float16_t>(this->m_memory_info,
-                                                 response.data(),
-                                                 sequence_length * response_dims[2],
-                                                 response_dims.data(),
-                                                 response_dims.size());
+            = Ort::Value::CreateTensor<float>(this->m_memory_info,
+                                              response.data(),
+                                              sequence_length * response_dims[2],
+                                              response_dims.data(),
+                                              response_dims.size());
 
         this->m_output_tensors.push_back(std::move(rsp));
 
@@ -102,12 +91,12 @@ namespace TWA
         try
         {
             this->m_session.Run(run_options,
-                this->m_input_node_names.data(),
-                this->m_input_tensors.data(),
-                this->m_input_tensors.size(),
-                this->m_output_node_names.data(),
-                this->m_output_tensors.data(),
-                1);
+                                this->m_input_node_names.data(),
+                                this->m_input_tensors.data(),
+                                this->m_input_tensors.size(),
+                                this->m_output_node_names.data(),
+                                this->m_output_tensors.data(),
+                                this->m_output_tensors.size());
         }
         catch(const std::exception& e)
         {

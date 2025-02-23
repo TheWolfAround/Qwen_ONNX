@@ -19,7 +19,7 @@ static const std::string CWD = std::filesystem::current_path().string();
 
 int main()
 {
-    const std::string model_path = CWD + R"(\..\..\watanabe_onnx_float16\wtb_float16.onnx)";
+    const std::string model_path = CWD + R"(\..\..\watanabe_onnx_float16\wtb_float16_2.onnx)";
 
     std::unique_ptr<TWA::onnxruntime> onnx{new TWA::onnxruntime(model_path)};
     onnx->set_onnx_threads(2);
@@ -29,7 +29,7 @@ int main()
 
     std::vector<int64_t> ids{151644, 8948, 198, 151645, 198, 151644, 872, 198, 2679, 358};
     std::vector<int64_t> atn(ids.size(), 1);
-    std::vector<float16_t> rsp{};
+    std::vector<float> rsp{};
 
     size_t rsp_size = ids.size() * 151936;
 
@@ -39,7 +39,7 @@ int main()
 
     for (size_t i = 0; i < rsp_size; i++)
     {
-        if (rsp[i].ToFloat() != 0)
+        if (rsp[i] != 0)
         {
             a += 1;
         }
@@ -55,7 +55,7 @@ int main()
 
     for (size_t i = 0; i < rsp_size; i++)
     {
-        if (rsp[i].ToFloat() != 0)
+        if (rsp[i] != 0)
         {
             a += 1;
         }

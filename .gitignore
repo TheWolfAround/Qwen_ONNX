@@ -7,6 +7,12 @@
 *.pdb
 *.ilk
 
+# Model files
+*.onnx
+*.safetensors
+*.pth
+*.bin
+
 # Build Folders
 __build_dir__
 __build_out__

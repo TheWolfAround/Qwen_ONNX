@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="CMakeSharedSettings">
-    <configurations>
-      <configuration PROFILE_NAME="Debug-MSVC" ENABLED="true" GENERATION_DIR="__build_dir__/CLion/MSVC/Debug" CONFIG_NAME="Debug" TOOLCHAIN_NAME="Visual Studio" GENERATION_OPTIONS="-D CMAKE_RUNTIME_OUTPUT_DIRECTORY=$PROJECT_DIR$/__build_out__ -D EDITOR_BUILD=ON" />
-      <configuration PROFILE_NAME="Release-MSVC" ENABLED="true" GENERATION_DIR="__build_dir__/CLion/MSVC/Release" CONFIG_NAME="Release" TOOLCHAIN_NAME="Visual Studio" GENERATION_OPTIONS="-D CMAKE_RUNTIME_OUTPUT_DIRECTORY=$PROJECT_DIR$/__build_out__ -D EDITOR_BUILD=ON" />
-    </configurations>
-  </component>
-</project>

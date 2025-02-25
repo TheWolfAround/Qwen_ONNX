@@ -32,13 +32,12 @@ namespace TWA
         try
         {
             Ort::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_DML(this->m_session_options, 0));
-            //Ort::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_CUDA(this->m_session_options, 0));
         }
         catch(const Ort::Exception& e)
         {
             std::cerr << e.what() << '\n';
-            std::cerr << "DirectML Execution Provider will be used.\n";
-            
+            std::cerr << "CPU Execution Provider will be used.\n";
+            Ort::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_CPU(this->m_session_options, 0));
         }
 
         std::filesystem::path model_fs_path = std::filesystem::u8path(model_path);

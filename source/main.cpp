@@ -15,9 +15,47 @@
 
 #include "onnxruntime.hpp"
 
+#include <tokenizers_cpp.h>
+
 static const std::string CWD = std::filesystem::current_path().string();
 
+void tokenizers_cpp_example();
+
+void model_inference_example();
+
 int main()
+{
+    tokenizers_cpp_example();
+
+    model_inference_example();
+
+    return 0;
+}
+
+void tokenizers_cpp_example()
+{
+    ::rust::Box<::TokenizerWrapper> tokenizer = new_tokenizer("D:/Programming_Projects/Inspect/qwen_onnx_convert/Qwen2.5-0.5B-Instruct/tokenizer.json");
+
+    ::EncodingResult result = tokenizer->encode("How are you doing! Are you alright?");
+
+    printf("input_ids size: %zd\nattention mask size: %zd\n", result.input_ids.size(), result.attention_mask.size());
+
+    for (size_t i = 0; i < result.input_ids.size(); i++)
+    {
+        printf("%d ", result.input_ids[i]);
+    }
+    printf("\n");
+
+    std::vector<uint32_t> c(result.input_ids.size(), 0);
+
+    c.assign(result.input_ids.begin(), result.input_ids.end());
+    
+    rust::String b = tokenizer->decode(c, false);
+
+    printf("b: %s\n", b.c_str());
+}
+
+void model_inference_example()
 {
     const std::string model_path = CWD + R"(\..\..\watanabe_onnx_float16\wtb_float16.onnx)";
 
@@ -62,8 +100,6 @@ int main()
     }
 
     printf("a2: %d\n", a);
-
-    return 0;
 }
 
 // end of file

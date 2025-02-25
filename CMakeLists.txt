@@ -51,9 +51,16 @@ if (MSVC)
 	include_directories(${THIRD_PARTY_FOLDER}/onnxruntime/windows/include/core/providers)
 	include_directories(${THIRD_PARTY_FOLDER}/onnxruntime/windows/include/core/session)
 
-	link_directories(${THIRD_PARTY_FOLDER}/onnxruntime/windows/lib)
+	include_directories(${THIRD_PARTY_FOLDER}/tokenizers/include)
 
+	link_directories(${THIRD_PARTY_FOLDER}/onnxruntime/windows/lib)
+	link_directories(${THIRD_PARTY_FOLDER}/tokenizers/windows/lib/${CMAKE_BUILD_TYPE})
+	
     set(ONNX_RUNTIME_LIB onnxruntime)
+	set(TOKENIZERS_CPP_LIB
+		tokenizers_cpp
+		Ntdll
+		Bcrypt)
 endif ()
 
 if (UNIX)
@@ -71,7 +78,8 @@ target_link_libraries(
 
 	PRIVATE
 
-	${ONNX_RUNTIME_LIB})
+	${ONNX_RUNTIME_LIB}
+	${TOKENIZERS_CPP_LIB})
 
 # Define a function to copy files if they don't exist in the destination
 function(copy_files_if_not_exist SRC_FILES DST_DIR)
@@ -104,47 +112,7 @@ set(ONNX_LIBS_FOLDER ${THIRD_PARTY_FOLDER}/onnxruntime/windows/lib)
 # Assuming you have a list of files and a destination directory
 set(ONNX_DLL_FILES
     ${ONNX_LIBS_FOLDER}/onnxruntime.dll
-    ${ONNX_LIBS_FOLDER}/DirectML.dll
-    ${ONNX_LIBS_FOLDER}/DirectML.Debug.dll
-    ${ONNX_LIBS_FOLDER}/onnxruntime_providers_cuda.dll
-    ${ONNX_LIBS_FOLDER}/onnxruntime_providers_tensorrt.dll
-    ${ONNX_LIBS_FOLDER}/onnxruntime_providers_shared.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cublas64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cublasLt64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cudart64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cudnn64_8.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cufft64_11.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cufftw64_11.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cuinj64_126.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/curand64_10.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cusolver64_11.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cusolverMg64_11.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/cusparse64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppc64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppial64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppicc64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppidei64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppif64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppig64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppim64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppist64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppisu64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nppitc64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/npps64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvblas64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvfatbin_120_0.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvinfer_10.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvinfer_builder_resource_10.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvinfer_dispatch_10.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvinfer_lean_10.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvinfer_plugin_10.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvinfer_vc_plugin_10.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvJitLink_120_0.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvjpeg64_12.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvonnxparser_10.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvrtc-builtins64_126.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvrtc64_120_0.alt.dll
-	${ONNX_LIBS_FOLDER}/cuda_tensorrt/nvrtc64_120_0.dll)
+    ${ONNX_LIBS_FOLDER}/DirectML.dll)
 
 set(DESTINATION_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 

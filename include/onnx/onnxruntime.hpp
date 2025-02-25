@@ -17,6 +17,8 @@
 #include <dml/dml_provider_factory.h>
 #include <cpu/cpu_provider_factory.h>
 
+using float16_t = Ort::Float16_t;
+
 ///
 /// @namespace TWA
 /// @brief TheWolfAround Namespace
@@ -49,7 +51,7 @@ namespace TWA
 
         void run(std::vector<int64_t>& input_ids,
                   std::vector<int64_t>& attention_mask,
-                  std::vector<float>& response);
+                  std::vector<float16_t>& response);
 
         void set_onnx_threads(uint32_t thread_count);
 
